@@ -1,5 +1,7 @@
 package com.cn.mappers;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 
@@ -57,5 +59,14 @@ public interface Pm_projectMapper {
 	/*@Delete("delete from pm_project where project_id = #{project_id}")
 	@FunctionDescriber(shortName = "删除项目信息")
 	public void deleteProject(Pm_project pm_project);*/
+	
+	@Select("select * from pm_project")
+	@FunctionDescriber(shortName = "查询所有项目")
+	public List<Pm_project> getProjects();
+	
+	@Select("select project_id from pm_member where user_id=#{user_id}")
+	@FunctionDescriber(shortName = "查询成员列表参与项目的id")
+	public List<Integer> project_ids(Integer user_id);
+
 
 }
