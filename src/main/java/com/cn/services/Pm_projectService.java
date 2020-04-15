@@ -1,6 +1,9 @@
 package com.cn.services;
 
+import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -35,23 +38,38 @@ public class Pm_projectService extends HttpBodyHandler {
 	}
 
 	@FunctionDescriber(shortName = "更新项目信息", description = "暂无", prerequisite = "暂无")
-	public java.lang.Integer updateProject(@Valid Pm_project pm_project) {
-		return pm_projectMapper.updateProject(pm_project);
+	public Integer updateProject(@Valid String project_id, String project_name, String project_spr, String project_type, String project_des,String project_men,String project_time) {
+		Pm_project project = new Pm_project();
+		project.setProject_id(Integer.parseInt(project_id));
+		project.setProject_name(project_name);
+		project.setProject_spr(project_spr);
+		project.setProject_type(project_type);
+		project.setProject_des(project_des);
+		project.setProject_men(project_men);
+		project.setProject_time(project_time);
+		return pm_projectMapper.updateProject(project);
 	}
 
 	@FunctionDescriber(shortName = "添加项目信息", description = "暂无", prerequisite = "暂无")
 	public void addProjectInfo(@Valid Pm_project pm_project) {
-		pm_projectMapper.addProjectInfo(pm_project);
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		pm_project.setProject_time(sdf.format(date));
+		//还没有写登录，暂时直接确定创建人
+		pm_project.setProject_men("魏文青");
+		 pm_projectMapper.addProjectInfo(pm_project);
+		 System.out.println(pm_project);
 	}
 
 	// 根据项目id查询项目信息
 	@FunctionDescriber(shortName = "根据项目id查询项目信息", description = "暂无", prerequisite = "暂无")
-	public Pm_project queryById(Integer project_id) throws Exception {
-		if (project_id == null) {
-			throw new Exception("请求参数有问题");
-		}
-		Pm_project pm_project = pm_projectMapper.queryById(project_id);
-		return pm_project;
+	public com.cn.models.Pm_project queryById(BigInteger project_id) {
+		return pm_projectMapper.queryById(project_id);
+	}
+	
+	@FunctionDescriber(shortName = "展示所有的项目信息", description = "暂无", prerequisite = "暂无")
+	public java.util.List<com.cn.models.Pm_project> getPm_project() {
+		return pm_projectMapper.getPm_project();
 	}
 
 	/*
@@ -60,7 +78,7 @@ public class Pm_projectService extends HttpBodyHandler {
 	 * pm_projectMapper.deleteProject(pm_project); }
 	 */
 
-	@FunctionDescriber(shortName = "查询所有项目", description = "暂无", prerequisite = "暂无")
+	/*@FunctionDescriber(shortName = "查询所有项目", description = "暂无", prerequisite = "暂无")
 	public List<Pm_project> getProjects(Integer param, Integer user_id) {
 		List<Pm_project> projects = pm_projectMapper.getProjects();
 		List<Pm_project> openProjects = new ArrayList<Pm_project>();
@@ -103,5 +121,5 @@ public class Pm_projectService extends HttpBodyHandler {
 			return closeProjects;
 		}
 
-	}
+	}*/
 }

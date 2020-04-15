@@ -1,5 +1,6 @@
 package com.cn.mappers;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
@@ -49,10 +50,10 @@ public interface Pm_projectMapper {
 	@Select("select project_des, project_name,project_type,project_men,project_spr,project_time from pm_project where project_id=#{project_id}")
 	@ResultType(Pm_project.class)
 	@FunctionDescriber(shortName = "根据项目id查询项目信息")
-	Pm_project queryById(@Param("project_id") Integer project_id);
+	Pm_project queryById(@Param("project_id") BigInteger  project_id);
 	
 	@Update("update pm_project set project_des=#{project_des},project_name=#{project_name},project_type=#{project_type},project_men=#{project_men},project_spr=#{project_spr},project_time=#{project_time} where project_id = #{project_id}")
-	@ResultType(Integer.class)
+	@ResultType(BigInteger.class)
 	@FunctionDescriber(shortName = "更新项目信息")
 	Integer updateProject(Pm_project pm_project);
 	
@@ -63,6 +64,10 @@ public interface Pm_projectMapper {
 	@Select("select * from pm_project")
 	@FunctionDescriber(shortName = "查询所有项目")
 	public List<Pm_project> getProjects();
+	//测试
+	@Select("select * from pm_project")
+	@FunctionDescriber(shortName = "展示所有的项目信息")
+	public List<Pm_project> getPm_project();
 	
 	@Select("select project_id from pm_member where user_id=#{user_id}")
 	@FunctionDescriber(shortName = "查询成员列表参与项目的id")
