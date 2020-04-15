@@ -64,10 +64,6 @@ public interface Pm_projectMapper {
 	@Select("select * from pm_project")
 	@FunctionDescriber(shortName = "查询所有项目")
 	public List<Pm_project> getProjects();
-	//测试
-	@Select("select * from pm_project")
-	@FunctionDescriber(shortName = "展示所有的项目信息")
-	public List<Pm_project> getPm_project();
 	
 	@Select("select project_id from pm_member where user_id=#{user_id}")
 	@FunctionDescriber(shortName = "查询成员列表参与项目的id")

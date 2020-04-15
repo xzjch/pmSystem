@@ -67,11 +67,6 @@ public class Pm_projectService extends HttpBodyHandler {
 		return pm_projectMapper.queryById(project_id);
 	}
 	
-	@FunctionDescriber(shortName = "展示所有的项目信息", description = "暂无", prerequisite = "暂无")
-	public java.util.List<com.cn.models.Pm_project> getPm_project() {
-		return pm_projectMapper.getPm_project();
-	}
-
 	/*
 	 * @FunctionDescriber(shortName = "删除项目信息", description = "暂无", prerequisite =
 	 * "暂无") public void deleteProject(@Valid Pm_project pm_project) {
