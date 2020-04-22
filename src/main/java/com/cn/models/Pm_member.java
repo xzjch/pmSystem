@@ -32,16 +32,16 @@ public class Pm_member {
 	@FieldDescriber("关联角色名id")
 	private int role_id;
 	
-	@FieldDescriber("角色名")
-	private String role_name;
+//	@FieldDescriber("角色名")
+//	private String role_name;
 	
 	@FieldDescriber("关联的用户ID")
 //	每一个成员变量应该有一个Reqired变量（没有默认表示该参数是前端请求的必填项）
 //	@Required(false)
 	private int user_id;
 	
-	@FieldDescriber("用户名")
-	private String user_name;
+//	@FieldDescriber("用户名")
+//	private String user_name;
 	
 
 	public int getMember_id() {
@@ -77,21 +77,21 @@ public class Pm_member {
 	}
 
 	/* 新添加的字段 */
-	public String getRole_name() {
-		return role_name;
-	}
-
-	public void setRole_name(String role_name) {
-		this.role_name = role_name;
-	}
-
-	public String getUser_name() {
-		return user_name;
-	}
-
-	public void setUser_name(String user_name) {
-		this.user_name = user_name;
-	}
+//	public String getRole_name() {
+//		return role_name;
+//	}
+//
+//	public void setRole_name(String role_name) {
+//		this.role_name = role_name;
+//	}
+//
+//	public String getUser_name() {
+//		return user_name;
+//	}
+//
+//	public void setUser_name(String user_name) {
+//		this.user_name = user_name;
+//	}
 	
 }
 

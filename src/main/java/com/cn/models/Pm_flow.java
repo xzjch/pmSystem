@@ -20,30 +20,29 @@ public class Pm_flow {
 	private int flow_id;
 	
 	@NotNull
-	@Size(min = 6, max = 20, message = "流转规则名称在6-20个字符之间") 
+	@Size(min = 1, max = 10, message = "流转规则名称在1-10个字符之间") 
 	@FieldDescriber("流转规则名称")
 	@Required(false)
 	private String flow_rule;
 	
-	@NotNull
+	
+	@Size(max = 20)
 	@FieldDescriber("泳道列表")
-	@DefaultValue("0")
-	private int lane_name1;
+	private String lane_name1;
 	
-	@NotNull
+	
+	@Size(max = 20)
 	@FieldDescriber("流转条件")
-	@DefaultValue("0")
-	private int flow_condition;
+	private String flow_condition;
 	
-	@NotNull
+
+	@Size(max = 20)
 	@FieldDescriber("流转到的泳道列表")
-	@DefaultValue("0")
-	private int lane_name2;
+	private String lane_name2;
 	
-	@NotNull
+	@Size(max = 20)
 	@FieldDescriber("流转后的状态")
-	@DefaultValue("0")
-	private int lane_state;
+	private String lane_state;
 	
 	@NotNull
 	@FieldDescriber("所属项目ID")
@@ -65,35 +64,35 @@ public class Pm_flow {
 		this.flow_rule = flow_rule;
 	}
 
-	public int getLane_name1() {
+	public String getLane_name1() {
 		return lane_name1;
 	}
 
-	public void setLane_name1(int lane_name1) {
+	public void setLane_name1(String lane_name1) {
 		this.lane_name1 = lane_name1;
 	}
 
-	public int getFlow_condition() {
+	public String getFlow_condition() {
 		return flow_condition;
 	}
 
-	public void setFlow_condition(int lflow_condition) {
+	public void setFlow_condition(String lflow_condition) {
 		this.flow_condition = lflow_condition;
 	}
 
-	public int getLane_name2() {
+	public String getLane_name2() {
 		return lane_name2;
 	}
 
-	public void setLane_name2(int lane_name2) {
+	public void setLane_name2(String lane_name2) {
 		this.lane_name2 = lane_name2;
 	}
 
-	public int getLane_state() {
+	public String getLane_state() {
 		return lane_state;
 	}
 
-	public void setLane_state(int lane_state) {
+	public void setLane_state(String lane_state) {
 		this.lane_state = lane_state;
 	}
 
