@@ -12,6 +12,7 @@ import javax.validation.constraints.Size;
 import com.github.tools.annotations.api.FieldDescriber;
 import com.github.tools.annotations.api.Required;
 import com.github.tools.annotations.mysql.AutoIncrement;
+import com.github.tools.annotations.mysql.DefaultValue;
 import com.github.tools.annotations.mysql.JavaBean;
 import com.github.tools.annotations.mysql.NotNull;
 import com.github.tools.annotations.mysql.PrivateKey;
@@ -45,6 +46,18 @@ public class Pm_user {
 	@FieldDescriber("用户真实姓名")
 	private String user_realname;
 	
+	@Size(max = 10) 
+	@FieldDescriber("用户状态")
+	private String user_state;
+	
+	@FieldDescriber("部门ID")
+	private int department_id;
+	
+	@FieldDescriber("部门下员工的职位")
+	@Size(max = 10)
+	@DefaultValue("0")
+	private String department_user_role;//（0是无部门人员,1是部门主管,2是部门成员）
+	
 	@FieldDescriber("关联的角色ID")
 //	每一个成员变量应该有一个Reqired变量（没有默认表示该参数是前端请求的必填项）
 	@Required(false)
@@ -72,6 +85,14 @@ public class Pm_user {
 
 	public void setUser_realname(String user_realname) {
 		this.user_realname = user_realname;
+	}
+
+	public String getUser_state() {
+		return user_state;
+	}
+
+	public void setUser_state(String user_state) {
+		this.user_state = user_state;
 	}
 
 	public int getRole_id() {

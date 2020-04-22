@@ -1,4 +1,5 @@
 package com.cn.services;
+import java.math.BigInteger;
 /**
 
  * @author GMZ
@@ -9,6 +10,7 @@ package com.cn.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.cn.mappers.Pm_memberMapper;
 import com.cn.models.Pm_member;
@@ -27,6 +29,8 @@ public class Pm_memberService extends HttpBodyHandler {
 
 	@Autowired
 	private Pm_memberMapper pm_memberMapper;
+	
+	/*****************************耿明泽***********************************/
 
 	/* 展示某一项目所有成员的信息 */
 	@FunctionDescriber(shortName = "展示某一项目所有成员的信息", description = "暂无", prerequisite = "暂无")
@@ -36,12 +40,19 @@ public class Pm_memberService extends HttpBodyHandler {
 
 	/* 查询用户进入项目得权限，返回角色ID，让前台判断是不是PO */
 	@FunctionDescriber(shortName = "查询用户进入项目得权限", description = "暂无", prerequisite = "暂无")
-	public java.lang.Integer getPm_project(Integer project_id, Integer user_id) {
-		return pm_memberMapper.getPm_project(project_id, user_id);
+	public java.lang.Integer getRoleById(BigInteger project_id, BigInteger user_id) {
+		System.out.println(pm_memberMapper.getMemberRoleById(project_id, user_id));
+		if(pm_memberMapper.getMemberRoleById(project_id, user_id)==null) {
+			//若用户没有在当前项目中成员列表查询到角色，就去查用户表里的角色。再返回对应的角色
+			return pm_memberMapper.getUserRoleById(user_id);
+		}else {
+			//返回用户在当前项目中成员列表对应的角色
+			return pm_memberMapper.getMemberRoleById(project_id, user_id);
+		}
 	}
 
-	/* 成员列表展示没有进入项目的所有用户信息 */
-	@FunctionDescriber(shortName = "展示所有用户的信息", description = "暂无", prerequisite = "暂无")
+	/* 成员列表展示没有进入项目的所有用户信息--PO/SM */
+	@FunctionDescriber(shortName = "成员列表展示没有进入项目的所有用户信息", description = "暂无", prerequisite = "暂无")
 	public java.util.List<com.cn.models.Pm_user> getPm_user(Integer project_id) {
 		
 		List<Pm_member> pm_merbers = pm_memberMapper.getPm_member(project_id);
@@ -69,12 +80,37 @@ public class Pm_memberService extends HttpBodyHandler {
 		}
 		return users;
 	}	 
-	
+
+	/* 判断当前项目是否已存在SM */
+	@FunctionDescriber(shortName = "判断当前项目是否已存在SM", description = "暂无", prerequisite = "暂无")
+	public Integer getMemberSM(BigInteger project_id) {
+		List<Integer>role_ids=pm_memberMapper.getMemberRoles(project_id);
+		for (Integer role_id : role_ids) {
+			if(role_id==6) {
+				return 0;//已存在SM
+			}
+		}
+		return 1;//没有存在SM
+	}
 
 	/* 添加成员 */
 	@FunctionDescriber(shortName = "添加成员", description = "暂无", prerequisite = "暂无")
-	public void addPm_member(Integer project_id, Integer user_id) {
-		pm_memberMapper.addPm_member(project_id, user_id);
+	public void addPm_member(BigInteger project_id, BigInteger user_id,BigInteger userRole_id) {
+		//先查询pm_user用户表当中当前用户是什么角色
+		//Integer i=Integer.valueOf(project_id.toString());
+		System.out.println(userRole_id);
+		int i=1;
+		BigInteger b=BigInteger.valueOf(i);
+		int role_id=pm_memberMapper.getUserRoleById(user_id);
+		if(role_id==4) {
+			pm_memberMapper.addPm_member(project_id, user_id,role_id);//=======PO要添加客户
+		}else if(Integer.valueOf(userRole_id.toString())==5){
+			//再将角色放入pm_成员表
+			pm_memberMapper.addPm_member(project_id, user_id,6);//=======PO要添加SM
+		}else {
+			pm_memberMapper.addPm_member(project_id, user_id,7);//=======SM要添加开发人员
+		}
+		
 	}
 
 	/* 修改角色 */
@@ -85,16 +121,8 @@ public class Pm_memberService extends HttpBodyHandler {
 
 	/* 移除成员 */
 	@FunctionDescriber(shortName = "移除成员", description = "暂无", prerequisite = "暂无")
-	public void deletePm_member(Integer project_id, Integer user_id) {
+	public void deletePm_member(BigInteger project_id, BigInteger user_id) {
 		pm_memberMapper.deletePm_member(project_id, user_id);
 	}
-
-	/*
-	 * 可以不需要 成员列表展示所有角色
-	 * 
-	 * @FunctionDescriber(shortName = "展示所有角色", description = "暂无", prerequisite =
-	 * "暂无") public java.util.List<com.cn.models.Pm_role> getPm_role() { return
-	 * pm_memberMapper.getPm_role(); }
-	 */
-
+	/*****************************耿明泽***********************************/
 }

@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.github.tools.annotations.api.FunctionDescriber;
 import com.github.webfrk.core.HttpBodyHandler;
@@ -31,11 +32,19 @@ public class Pm_projectService extends HttpBodyHandler {
 	 * prerequisite = "暂无") public java.util.List<com.cn.models.Pm_project>
 	 * getPm_project() { return pm_projectMapper.getPm_project(); }
 	 */
+	/*****************************耿明泽***********************************/
+	@FunctionDescriber(shortName = "展现当前项目是否归档", description = "暂无", prerequisite = "暂无")
+	public String getProject_State(BigInteger  project_id) {
+		return pm_projectMapper.getProject_State(project_id);
+	}
 
 	@FunctionDescriber(shortName = "归档项目/取消归档项目", description = "暂无", prerequisite = "暂无")
-	public void updatePm_project(Integer project_id, @Required(false) Integer project_state) {
+	public void updatePm_project(BigInteger project_id,  String project_state) {
+		System.out.println(project_id);
+		System.out.println(project_state);
 		pm_projectMapper.updatePm_project(project_id, project_state);
 	}
+	/*****************************耿明泽***********************************/
 
 	@FunctionDescriber(shortName = "更新项目信息", description = "暂无", prerequisite = "暂无")
 	public Integer updateProject(@Valid String project_id, String project_name, String project_spr, String project_type, String project_des,String project_men,String project_time) {

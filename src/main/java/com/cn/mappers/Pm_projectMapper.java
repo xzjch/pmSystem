@@ -26,14 +26,18 @@ import com.github.tools.annotations.api.FunctionDescriber;
 
 @Mapper
 public interface Pm_projectMapper {
-
-	/* 查询用户进入项目得权限 */
-
+	
+	/*****************************耿明泽***********************************/
+	/* 展现当前项目是否归档*/
+	@Select("select project_state from pm_project where project_id=#{project_id}")
+	@FunctionDescriber(shortName = "展现当前项目是否归档")
+	public String getProject_State(BigInteger project_id);
+	
 	/* 归档项目/取消归档项目 */
 	@Update("update  pm_project set project_state=#{project_state} where project_id=#{project_id}")
 	@FunctionDescriber(shortName = "归档项目/取消归档项目")
-	public void updatePm_project(Integer project_id, Integer project_state);
-
+	public void updatePm_project(BigInteger project_id, String project_state);
+	/*****************************耿明泽***********************************/
 	/*
 	 * 查询用户进入项目得权限
 	 * 
