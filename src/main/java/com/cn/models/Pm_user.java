@@ -102,5 +102,21 @@ public class Pm_user {
 	public void setRole_id(int role_id) {
 		this.role_id = role_id;
 	}
+
+	public int getDepartment_id() {
+		return department_id;
+	}
+
+	public void setDepartment_id(int department_id) {
+		this.department_id = department_id;
+	}
+
+	public String getDepartment_user_role() {
+		return department_user_role;
+	}
+
+	public void setDepartment_user_role(String department_user_role) {
+		this.department_user_role = department_user_role;
+	}
 	
 }

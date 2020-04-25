@@ -17,9 +17,12 @@ import com.github.tools.annotations.api.FunctionDescriber;
 public interface Pm_departmentMapper {
 	
 	/*****************************耿明泽***********************************/
-	@Select("select user_id from pm_department")
-	@FunctionDescriber(shortName = "查询所有部门下的所有的用户")
-	public Pm_department queryDepartmentUsers();
+	/*
+	 * @Select("select user_id from pm_department")
+	 * 
+	 * @FunctionDescriber(shortName = "查询所有部门下的所有的用户") public Pm_department
+	 * queryDepartmentUsers();
+	 */
 	/*****************************耿明泽***********************************/
 
 }

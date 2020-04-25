@@ -14,7 +14,9 @@ import com.github.tools.annotations.api.FunctionDescriber;
 import com.github.webfrk.core.HttpBodyHandler;
 import com.github.tools.annotations.ServiceDefinition;
 import com.github.tools.annotations.api.Required;
+import com.cn.mappers.Pm_memberMapper;
 import com.cn.mappers.Pm_projectMapper;
+import com.cn.mappers.Pm_userMapper;
 import com.cn.models.Pm_project;
 
 /**
@@ -26,28 +28,34 @@ public class Pm_projectService extends HttpBodyHandler {
 
 	@Autowired
 	private Pm_projectMapper pm_projectMapper;
+	@Autowired
+	private Pm_memberMapper pm_memberMapper;
+	@Autowired
+	private Pm_userMapper pm_userMapper;
 
 	/*
 	 * @FunctionDescriber(shortName = "查询用户进入项目得权限", description = "暂无",
 	 * prerequisite = "暂无") public java.util.List<com.cn.models.Pm_project>
 	 * getPm_project() { return pm_projectMapper.getPm_project(); }
 	 */
-	/*****************************耿明泽***********************************/
+	/***************************** 耿明泽 ***********************************/
 	@FunctionDescriber(shortName = "展现当前项目是否归档", description = "暂无", prerequisite = "暂无")
-	public String getProject_State(BigInteger  project_id) {
+	public String getProject_State(BigInteger project_id) {
 		return pm_projectMapper.getProject_State(project_id);
 	}
 
 	@FunctionDescriber(shortName = "归档项目/取消归档项目", description = "暂无", prerequisite = "暂无")
-	public void updatePm_project(BigInteger project_id,  String project_state) {
+	public void updatePm_project(BigInteger project_id, String project_state) {
 		System.out.println(project_id);
 		System.out.println(project_state);
 		pm_projectMapper.updatePm_project(project_id, project_state);
 	}
-	/*****************************耿明泽***********************************/
+
+	/***************************** 耿明泽 ***********************************/
 
 	@FunctionDescriber(shortName = "更新项目信息", description = "暂无", prerequisite = "暂无")
-	public Integer updateProject(@Valid String project_id, String project_name, String project_spr, String project_type, String project_des,String project_men,String project_time) {
+	public Integer updateProject(@Valid String project_id, String project_name, String project_spr, String project_type,
+			String project_des, String project_men, String project_time) {
 		Pm_project project = new Pm_project();
 		project.setProject_id(Integer.parseInt(project_id));
 		project.setProject_name(project_name);
@@ -64,10 +72,10 @@ public class Pm_projectService extends HttpBodyHandler {
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		pm_project.setProject_time(sdf.format(date));
-		//还没有写登录，暂时直接确定创建人
+		// 还没有写登录，暂时直接确定创建人
 		pm_project.setProject_men("魏文青");
-		 pm_projectMapper.addProjectInfo(pm_project);
-		 System.out.println(pm_project);
+		pm_projectMapper.addProjectInfo(pm_project);
+		System.out.println(pm_project);
 	}
 
 	// 根据项目id查询项目信息
@@ -75,55 +83,155 @@ public class Pm_projectService extends HttpBodyHandler {
 	public com.cn.models.Pm_project queryById(BigInteger project_id) {
 		return pm_projectMapper.queryById(project_id);
 	}
-	
+
 	/*
 	 * @FunctionDescriber(shortName = "删除项目信息", description = "暂无", prerequisite =
 	 * "暂无") public void deleteProject(@Valid Pm_project pm_project) {
 	 * pm_projectMapper.deleteProject(pm_project); }
 	 */
 
-	/*@FunctionDescriber(shortName = "查询所有项目", description = "暂无", prerequisite = "暂无")
-	public List<Pm_project> getProjects(Integer param, Integer user_id) {
+	@SuppressWarnings("null")
+	@FunctionDescriber(shortName = "查询所有项目", description = "暂无", prerequisite = "暂无")
+	public List<Pm_project> getProjects(String param, BigInteger user_id) {
+		//前台请求的是归档还是未归档参数---1是归档、0是未归档
+		String returnParam = String.valueOf(param);
+		// 查询有哪些项目
 		List<Pm_project> projects = pm_projectMapper.getProjects();
+		// 未归档项目
 		List<Pm_project> openProjects = new ArrayList<Pm_project>();
+		// 已归档项目
 		List<Pm_project> closeProjects = new ArrayList<Pm_project>();
+		// 查询成员列表当前参与项目的id
 		List<Integer> project_ids = pm_projectMapper.project_ids(user_id);
-		for (Pm_project project : projects) {
-
-			if (project.getProject_state() == 1) {// 归档
-				// 公开的
-				if (project.getProject_type() == 0) {
-					closeProjects.add(project);
-				} else {
-					// 私有的
-					for (Integer project_id : project_ids) {
-						// 参与的
-						if (project.getProject_id() == project_id) {
-							closeProjects.add(project);
-						}
-					}
-
-				}
-			} else {// 未归档
-				if (project.getProject_type() == 0) {// 公开的
-					openProjects.add(project);
-				} else {// 私有的
-					for (Integer project_id : project_ids) {
-						// 参与的
-						if (project.getProject_id() == project_id) {
-							openProjects.add(project);
-						}
+		System.out.println("是否能在成员列表中有项目"+project_ids.size());
+	//	System.out.println("是否能在成员列表中有项目"+project_ids.size==0);
+		// 获取当前用户的角色
+		int userRole_id = pm_memberMapper.getUserRoleById(user_id);
+		if (project_ids.size()==0) {// 当前用户可能是财务主管/部门主管/组织高管/没有参与项目的无角色人或客户
+			if (userRole_id == 2 || userRole_id == 3) {// 财务主管/组织高管
+				for (Pm_project project : projects) {
+					System.out.println(projects.size());
+					if (project.getProject_state().equals("1")) {// 归档
+						closeProjects.add(project);
+					} else {// 未归档
+						openProjects.add(project);
 					}
 				}
-
+			}else if(userRole_id == 4) {
+				System.out.println("部门主管1");
+			//	List<Pm_project> dManageProjects1=pm_projectMapper.getShowProjects("0", "1");//公开归档项目
+				List<Pm_project> dManageProjects2=pm_projectMapper.getShowProjects("0", "0");//公开未归档项目
+				List<Pm_project> dManageProjects3=pm_projectMapper.getShowProjects("1", "1");//私有归档项目
+				List<Pm_project> dManageProjects4=pm_projectMapper.getShowProjects("1", "0");//私有未归档项目
+				System.out.println("部门主管2");
+				//添加公开归档项目
+				List<Pm_project> dManageProjects1=null;
+				for (Pm_project pm_project : dManageProjects1) {
+					closeProjects.add(pm_project);
+				}
+				System.out.println("部门主管3");
+				//添加公开未归档项目
+				for (Pm_project pm_project : dManageProjects2) {
+					openProjects.add(pm_project);
+				}
+				System.out.println("部门主管4");
+				
+				List<Pm_project> dManageProjects=new ArrayList<Pm_project>();
+				System.out.println("部门主管5");
+				//查询某个部门下所有用户
+				Integer departmentid=pm_userMapper.getDepartmentId(user_id);
+				System.out.println("departmentid:"+departmentid);
+				List<Integer> departmentUserids=pm_userMapper.getDepartmentUserIds(departmentid);
+				System.out.println("部门下有多少成员:"+departmentUserids.size());
+				for (int i = 0; i < departmentUserids.size(); i++) {
+					//查询成员列表某成员参与的所有项目
+					List<Pm_project> project=pm_projectMapper.queryUserAllProjects(departmentUserids.get(i));
+					if(project!=null) {
+						if(i==0) {
+							for (Pm_project pm_project : project) {
+								dManageProjects.add(pm_project);
+							}
+						}else {
+							for (Pm_project pm_project : project) {//查询所有项目
+								for (Pm_project dManageProject : dManageProjects) {//循环部门下成员参与的项目
+									if(dManageProject==pm_project) {
+										break;
+									}else {
+										dManageProjects.add(pm_project);
+									}
+								}
+							}
+						}	
+					}
+				}
+				
+				//添加私有归档项目
+				for (Pm_project pm_project : dManageProjects3) {
+					for (Pm_project project : dManageProjects) {
+						if(pm_project.getProject_id()==project.getProject_id()) {
+							closeProjects.add(pm_project);
+						}
+					}
+				}
+				//添加私有未归档项目
+				for (Pm_project pm_project : dManageProjects4) {
+					for (Pm_project project : dManageProjects) {
+						if(pm_project.getProject_id()==project.getProject_id()) {
+							openProjects.add(pm_project);
+						}
+					}
+				}
 			}
-
+		} else {// 客户/PO/SM/开发者
+			if(userRole_id == 8) {//客戶
+				System.out.println("客戶");
+				closeProjects = pm_projectMapper.getProjectsByProjectState("1",user_id);//
+				openProjects = pm_projectMapper.getProjectsByProjectState("0",user_id);
+			}else {//PO/SM/开发者
+				for (Pm_project project : projects) {
+					if (project.getProject_state().equals("1")) {// 归档
+						System.out.println("close0："+project.getProject_state());
+						// 公开的
+						if (project.getProject_type().equals("0")) {
+							System.out.println("close1："+project);
+							closeProjects.add(project);
+						} else {
+							// 私有的
+							for (Integer project_id : project_ids) {
+								// 参与的
+								if (project.getProject_id() == project_id) {
+									System.out.println("close2："+project);
+									closeProjects.add(project);
+								}
+							}
+						}
+					} else {// 未归档
+						if (project.getProject_type().equals("0")) {// 公开的
+							System.out.println("open0："+project.getProject_state());
+							openProjects.add(project);
+						} else {// 私有的
+							for (Integer project_id : project_ids) {
+								// 参与的
+								if (project.getProject_id() == project_id) {
+									System.out.println("open1："+project.getProject_state());
+									openProjects.add(project);
+								}
+							}
+						}
+					}
+				}
+			}
 		}
-		if (param == 0) {
-			return openProjects;
+		
+		//返回前台
+		if (param.equals("1")) {
+			System.out.println("param1:"+param);
+			return closeProjects;// 已归档项目
 		} else {
-			return closeProjects;
+			System.out.println("param0:"+param);
+			return openProjects;// 正在进行的项目
 		}
 
-	}*/
+	}
+
 }

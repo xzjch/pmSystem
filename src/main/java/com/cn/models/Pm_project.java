@@ -57,7 +57,7 @@ public class Pm_project {
 	@Required(true)
 	private String project_time;
 
-	@DefaultValue("baseball")
+	@DefaultValue("0")
 	@Size(max = 200)
 
 	@FieldDescriber("项目状态")
