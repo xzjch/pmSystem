@@ -38,5 +38,15 @@ public class Pm_iterationService extends HttpBodyHandler {
 	public java.util.List<com.cn.models.Pm_user> getUserByp_id(BigInteger project_id) {
 		return pm_iterationMapper.getUserByp_id(project_id);
 	}
+	//sxw
+	@FunctionDescriber(shortName = "展示（本项目）迭代信息", description = "暂无", prerequisite = "暂无")
+	public java.util.List<com.cn.models.Pm_iteration> getPm_iteration() {
+		return pm_iterationMapper.getPm_iteration();
+	}
+
+	@FunctionDescriber(shortName = "根据迭代id展示该迭代的用户故事", description = "暂无", prerequisite = "暂无")
+	public java.util.List<com.cn.models.Pm_iteration> listPm_iteration(BigInteger iteration_id) {
+		return pm_iterationMapper.listPm_iteration(iteration_id);
+	}
 
 }

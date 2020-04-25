@@ -3,13 +3,21 @@ package com.cn.models;
 import javax.validation.constraints.Size;
 
 import com.github.tools.annotations.api.FieldDescriber;
+import com.github.tools.annotations.api.Required;
 import com.github.tools.annotations.mysql.AutoIncrement;
 import com.github.tools.annotations.mysql.DefaultValue;
 import com.github.tools.annotations.mysql.PrivateKey;
 
+/*必须有JavaBean的注解
+ * 每一个成员变量都必须有FieldDescriber注解，用于生成文档
+ * 每一个成员变量至少有一个注解（com.github.tools.annotations.mysql目录下），用于生成SQL中的元素
+ * 每一个成员变量可以有长度约束，当前仅仅支持整型和字符串类型（javax.validation.constraints目录下），用于生成SQL语句中的长度约束
+ * 每一个成员变量应该有一个Reqired变量（没有默认表示该参数是前端请求的必填项）
+ * */
+//实体类必须要有JavaBean注解
 public class Pm_version {
-	  @PrivateKey
-	  @AutoIncrement
+	  @PrivateKey//主键
+	  @AutoIncrement//自增
 	  
 	  @FieldDescriber("发布计划ID")
 	  private int version_id;
@@ -19,20 +27,25 @@ public class Pm_version {
 	  private String version_name;
 
 	  @Size(max = 500)
+	  @Required(false)
 	  @FieldDescriber("发布备注")
 	  private String version_desc;
 	  
 	  @Size(max = 30)
+	  @Required(false)
 	  @FieldDescriber("发布的开始时间")
 	  private String version_stime;
 	  
 	  @Size(max = 30)
+	  @Required(false)
 	  @FieldDescriber("发布的截至时间")
 	  private String version_ptime;
 	  
-	  @DefaultValue("0")
+	  @Size(max = 30)
+	  @DefaultValue("未开始")
+	  @Required(false)
 	  @FieldDescriber("发布状态（状态。0：未开始，1：进行中，2：延期发布，3：已发布）")
-	  private int version_state;
+	  private String version_state;
 
 	  @FieldDescriber("项目ID")
 	  private int project_id;
@@ -84,11 +97,13 @@ public class Pm_version {
 		this.version_ptime = version_ptime;
 	}
 
-	public int getVersion_state() {
+
+
+	public String getVersion_state() {
 		return version_state;
 	}
 
-	public void setVersion_state(int version_state) {
+	public void setVersion_state(String version_state) {
 		this.version_state = version_state;
 	}
 
