@@ -29,10 +29,10 @@ public interface Pm_iterationMapper {
 	@FunctionDescriber(shortName = "根据项目id展示该项目的所有成员")
 	public List<Pm_user> getUserByp_id(@Param("project_id") BigInteger project_id);
 	
-	//展示（本项目）迭代信息,还需要获取本项目的id
+	/*//展示（本项目）迭代信息,还需要获取本项目的id
 	@Select("select * from pm_iteration")
 	@FunctionDescriber(shortName = "展示（本项目）迭代信息")
-	public List<Pm_iteration> getPm_iteration();
+	public List<Pm_iteration> getPm_iteration();*/
 			
 	//根据迭代ID展示该迭代的用户故事
 	@Select("select * from pm_iteration iteration,pm_story story "
