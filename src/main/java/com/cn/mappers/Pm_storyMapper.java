@@ -28,6 +28,7 @@ public interface Pm_storyMapper {
 	@Select("select * from pm_member member,pm_user user,pm_story story "
 			+ "where user.user_id=member.user_id and member.project_id=story.project_id and "
 			+ "story.story_id=#{story_id};")
+	@FunctionDescriber(shortName = "根据故事id查询该项目成员")
 	@ResultType(Pm_user.class)
 	public List<Pm_story> getPmMember(BigInteger story_id);
 
