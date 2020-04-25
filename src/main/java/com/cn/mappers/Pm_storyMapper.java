@@ -29,7 +29,7 @@ public interface Pm_storyMapper {
 			+ "where user.user_id=member.user_id and member.project_id=story.project_id and "
 			+ "story.story_id=#{story_id};")
 	@FunctionDescriber(shortName = "根据故事id查询该项目成员")
-	@ResultType(Pm_user.class)
+	@ResultType(Pm_story.class)
 	public List<Pm_story> getPmMember(BigInteger story_id);
 
 	//@Insert("INSERT INTO pm_story(story_con,story_not,story_stan,story_pri,story_state,lane_id,project_id) VALUES(#{story_con},#{story_not},#{story_stan},#{story_pri},#{story_state},#{lane_id},#{project_id})")
