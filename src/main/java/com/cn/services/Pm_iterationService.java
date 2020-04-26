@@ -48,5 +48,11 @@ public class Pm_iterationService extends HttpBodyHandler {
 	public java.util.List<com.cn.models.Pm_iteration> listPm_iteration(BigInteger iteration_id) {
 		return pm_iterationMapper.listPm_iteration(iteration_id);
 	}
+	
+	//刘天琪，展示迭代
+	@FunctionDescriber(shortName = "根据项目id展示该项目下的所有迭代", description = "暂无", prerequisite = "暂无")
+	public java.util.List<com.cn.models.Pm_iteration> listPm_iteration1(BigInteger project_id) {
+		return pm_iterationMapper.listPm_iteration1(project_id);
+	}
 
 }

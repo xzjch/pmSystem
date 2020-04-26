@@ -34,10 +34,32 @@ public class Pm_taskService extends HttpBodyHandler {
 	public void addPm_task(@Valid Pm_task pm_task) {
 		 pm_taskMapper.addPm_task(pm_task);
 	}
-
+    //刘天琪：迭代任务
 	@FunctionDescriber(shortName = "根据任务id删除任务", description = "暂无", prerequisite = "暂无")
 	public void deletePm_task(@Valid Pm_task pm_task) {
 		 pm_taskMapper.deletePm_task(pm_task);
+	}
+	
+	@FunctionDescriber(shortName = "根据迭代id展示该迭代的所有任务", description = "暂无", prerequisite = "暂无")
+	public java.util.List<com.cn.models.Pm_task> listPm_task1(BigInteger iteration_id) {
+		return pm_taskMapper.listPm_task1(iteration_id);
+	}
+	
+	@FunctionDescriber(shortName = "根据任务id展示该任务", description = "暂无", prerequisite = "暂无")
+	public com.cn.models.Pm_task queryById(BigInteger task_id) {
+		return pm_taskMapper.queryById(task_id);
+	}
+ 
+	@FunctionDescriber(shortName = "根据任务id更新任务", description = "暂无", prerequisite = "暂无")
+	public java.lang.Integer updatePm_task(@Valid String task_id, String task_con, String task_desc, String task_esti, String task_pri,String task_state) {
+		Pm_task task = new Pm_task();
+		task.setTask_id(Integer.parseInt(task_id));
+		task.setTask_con(task_con);
+		task.setTask_desc(task_desc);
+		task.setTask_esti(task_esti);
+		task.setTask_pri(task_pri);
+		task.setTask_state(task_state);
+		return pm_taskMapper.updatePm_task(task);
 	}
 
 }
