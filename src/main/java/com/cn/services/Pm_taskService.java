@@ -61,5 +61,15 @@ public class Pm_taskService extends HttpBodyHandler {
 		task.setTask_state(task_state);
 		return pm_taskMapper.updatePm_task(task);
 	}
+	
+	//邢娇娇
+		@FunctionDescriber(shortName = "根据迭代id和泳道id查询任务", description = "暂无", prerequisite = "暂无")
+		public java.util.List<com.cn.models.Pm_task> getProLaneTask(BigInteger lane_id, BigInteger iteration_id)
+				throws Exception {
+			if (lane_id == null || iteration_id == null) {
+				throw new Exception("请求参数有问题");
+			}
+			return pm_taskMapper.getProLaneTask(lane_id, iteration_id);
+		}
 
 }

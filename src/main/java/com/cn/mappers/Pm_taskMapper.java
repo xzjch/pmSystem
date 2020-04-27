@@ -53,6 +53,11 @@ public interface Pm_taskMapper {
 		@FunctionDescriber(shortName = "根据任务id更新任务")
 		Integer updatePm_task(Pm_task pm_task);
 		
-
+		//邢娇娇
+		//根据迭代id和泳道id查询任务
+			@Select("select * from pm_task where lane_id=#{lane_id} and iteration_id=#{iteration_id}")
+			@FunctionDescriber(shortName = "根据迭代id和泳道id查询任务") 
+			public List<Pm_task> getProLaneTask(@Param("lane_id") BigInteger lane_id,@Param("iteration_id") BigInteger iteration_id);
+		
 	
 }
