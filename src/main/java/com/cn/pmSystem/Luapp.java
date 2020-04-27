@@ -3,14 +3,7 @@
 package com.cn.pmSystem;
 
 import com.cn.mappers.Pm_flowMapper;
-import com.cn.models.Pm_department;
-import com.cn.models.Pm_member;
-import com.cn.models.Pm_project;
-import com.cn.models.Pm_project_bind;
-import com.cn.models.Pm_role;
-import com.cn.models.Pm_story;
-import com.cn.models.Pm_user;
-import com.cn.models.Pm_version;
+import com.cn.models.Pm_iteration;
 import com.github.tools.generators.codes.ServiceGenerator;
 import com.github.tools.generators.sqls.MyqlTableGenerator;
 
@@ -37,7 +30,8 @@ public class Luapp {
 		//sql.createDatabase();
 		//sql.createTable(Pm_flow.class);
 		//sql.createTable(Pm_lane.class);
-		
+
+		sql.createTable(Pm_iteration.class);		
 //			sql.createTable(Pm_department.class);
 //			sql.createTable(Pm_role.class);
 //			sql.createTable(Pm_user.class);

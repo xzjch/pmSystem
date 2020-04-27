@@ -47,5 +47,35 @@ public interface Pm_iterationMapper {
 	@ResultType(Pm_iteration.class)
 	@FunctionDescriber(shortName = "根据项目id展示该项目的迭代")
 	public List<Pm_iteration> listPm_iteration1(BigInteger project_id);
+	
+	//卢湛兴（开始）----------------------------------------------------------------------
+	//添加迭代计划
+		@Insert("INSERT INTO pm_iteration(iteration_name,iteration_stime,iteration_otime,iteration_desc,project_id) VALUES(#{iteration_name},#{iteration_stime},#{iteration_otime},#{iteration_desc},#{project_id})")
+		@FunctionDescriber(shortName = "添加迭代计划")
+		public void addPm_iteration(Pm_iteration pm_iteration);
+		
+		//根据项目id查询所有迭代
+		@Select("select *  from pm_iteration where project_id=#{project_id}")
+		@FunctionDescriber(shortName = "查询该项目所有迭代计划")
+		public List<Pm_iteration> queryIteration(BigInteger project_id);
+		
+		//根据iteration_id查询某一迭代计划详情
+		@Select("select * from pm_iteration where iteration_id=#{iteration_id}")
+		@ResultType(Pm_iteration.class)
+		@FunctionDescriber(shortName = "查询迭代计划详情")
+		Pm_iteration queryIterationDetails(@Param("iteration_id") BigInteger iteration_id);
+		
+		//编辑某一迭代计划
+		@Update("update pm_iteration set iteration_name=#{iteration_name},iteration_stime=#{iteration_stime},iteration_otime=#{iteration_otime},iteration_desc=#{iteration_desc} where iteration_id=#{iteration_id}")
+		@ResultType(BigInteger.class)
+		@FunctionDescriber(shortName = "编辑迭代计划")
+		Integer updatePm_iteration(Pm_iteration pm_iteration);
+		
+		//删除迭代计划
+		@Delete("delete from pm_iteration where iteration_id=#{iteration_id}")
+		@FunctionDescriber(shortName = "根据iteration_id删除迭代计划")
+		public void deletePm_iteration(@Param("iteration_id") BigInteger iteration_id);
+	
+	//卢湛兴（结束）----------------------------------------------------------------------
 			
 }
