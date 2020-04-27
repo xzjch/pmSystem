@@ -37,26 +37,34 @@ public interface Pm_projectMapper {
 	@FunctionDescriber(shortName = "归档项目/取消归档项目")
 	public void updatePm_project(BigInteger project_id, String project_state);
 
-	/* 查询成员列表某成员参与的所有项目信息 */
-	@Select("select * from pm_member,pm_project where user_id=#{user_id} "
-			+ "and pm_member.project_id=pm_project.project_id")
-	@FunctionDescriber(shortName = "查询成员列表某成员参与的所有项目信息")
-	public List<Pm_project> queryUserAllProjects(Integer user_id);
-	
+	/* 查询部门成员参与的所有私有项目信息 */
+	@Select("select * from pm_member member,pm_project project,pm_user "
+			+ "where pm_user.department_id=#{department_id} and project.project_type='1' "
+			+ "and member.project_id=project.project_id and pm_user.user_id=member.user_id")
+	@FunctionDescriber(shortName = "查询部门成员参与的所有私有项目信息 ")
+	public List<Pm_project> queryUserAllPersonProjects(Integer department_id);
+
+	// 查询成员列表参与项目的id
 	@Select("select project_id from pm_member where user_id=#{user_id}")
 	@FunctionDescriber(shortName = "查询成员列表参与项目的id")
 	public List<Integer> project_ids(BigInteger user_id);
-	
-	
-	@Select("select * from pm_project where project_type=#{project_type} and "
-			+ "project_state=#{project_state}")
+
+	// 通过项目状态和项目类型查找项目
+	@Select("select * from pm_project where project_type=#{project_type} and " + "project_state=#{project_state}")
 	@FunctionDescriber(shortName = "通过项目状态和项目类型查找项目")
-	public List<Pm_project> getShowProjects(@Param("project_type")String project_type,@Param("project_state")String project_state);
-	
+	public List<Pm_project> getShowProjects(@Param("project_type") String project_type,
+			@Param("project_state") String project_state);
+
+	// 通过项目状态和项目类型查找项目
 	@Select("select * from pm_project,pm_member where project_state=#{project_state} and user_id=#{user_id} "
 			+ "and pm_member.project_id=pm_project.project_id")
 	@FunctionDescriber(shortName = "通过项目状态和项目类型查找项目")
-	public List<Pm_project> getProjectsByProjectState(String project_state,BigInteger user_id);
+	public List<Pm_project> getProjectsByProjectState(String project_state, BigInteger user_id);
+
+	// 查询所有项目
+	@Select("select * from pm_project")
+	@FunctionDescriber(shortName = "查询所有项目")
+	public List<Pm_project> getProjects();
 
 	/***************************** 耿明泽 ***********************************/
 	/*
@@ -82,16 +90,13 @@ public interface Pm_projectMapper {
 	@FunctionDescriber(shortName = "更新项目信息")
 	Integer updateProject(Pm_project pm_project);
 
+	
+
 	/*
 	 * @Delete("delete from pm_project where project_id = #{project_id}")
 	 * 
 	 * @FunctionDescriber(shortName = "删除项目信息") public void deleteProject(Pm_project
 	 * pm_project);
 	 */
-
-	@Select("select * from pm_project")
-	@FunctionDescriber(shortName = "查询所有项目")
-	public List<Pm_project> getProjects();
-
 
 }
