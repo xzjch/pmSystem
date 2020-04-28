@@ -58,7 +58,7 @@ public class Pm_storyService extends HttpBodyHandler {
 	}
 
 	@FunctionDescriber(shortName = "根据id更新用户故事PO", description = "暂无", prerequisite = "暂无")
-	public void updatePmStory(@Valid String story_id, String story_con, String story_not, String story_stan,
+	public void updatePmStory(@Valid String lane_id,String story_id, String story_con, String story_not, String story_stan,
 			String story_pri, String story_state, String story_number, String user_name) {
 		Pm_story pm_story = new Pm_story();
 		pm_story.setStory_id(Integer.parseInt(story_id));
@@ -68,6 +68,8 @@ public class Pm_storyService extends HttpBodyHandler {
 		pm_story.setStory_pri(story_pri);
 		pm_story.setStory_state(story_state);
 		//pm_story.setLane_id(Integer.parseInt(lane_id));
+		//卢加了lane_id
+		pm_story.setLane_id(lane_id);
 		System.out.println(story_number);
 		System.out.println(user_name);
 		pm_story.setStory_number(story_number);

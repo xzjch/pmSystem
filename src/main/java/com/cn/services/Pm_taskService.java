@@ -51,7 +51,7 @@ public class Pm_taskService extends HttpBodyHandler {
 	}
  
 	@FunctionDescriber(shortName = "根据任务id更新任务", description = "暂无", prerequisite = "暂无")
-	public java.lang.Integer updatePm_task(@Valid String task_id, String task_con, String task_desc, String task_esti, String task_pri,String task_state) {
+	public java.lang.Integer updatePm_task(@Valid String lane_id,String task_id, String task_con, String task_desc, String task_esti, String task_pri,String task_state) {
 		Pm_task task = new Pm_task();
 		task.setTask_id(Integer.parseInt(task_id));
 		task.setTask_con(task_con);
@@ -59,6 +59,7 @@ public class Pm_taskService extends HttpBodyHandler {
 		task.setTask_esti(task_esti);
 		task.setTask_pri(task_pri);
 		task.setTask_state(task_state);
+		task.setLane_id(lane_id);
 		return pm_taskMapper.updatePm_task(task);
 	}
 	
