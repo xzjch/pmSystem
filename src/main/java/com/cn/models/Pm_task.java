@@ -44,7 +44,7 @@ public class Pm_task {
 	  private int story_id;
 	  
 	  @FieldDescriber("泳道ID")
-	  private int lane_id;
+	  private String lane_id;
 	  
 	  @FieldDescriber("迭代ID")
 	  private int iteration_id;
@@ -105,11 +105,11 @@ public class Pm_task {
 		this.story_id = story_id;
 	}
 
-	public int getLane_id() {
+	public String getLane_id() {
 		return lane_id;
 	}
 
-	public void setLane_id(int lane_id) {
+	public void setLane_id(String lane_id) {
 		this.lane_id = lane_id;
 	}
 

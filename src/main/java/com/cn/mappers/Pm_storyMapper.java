@@ -66,7 +66,8 @@ public interface Pm_storyMapper {
 	
 	
     //@Update("update pm_story set story_con=#{story_con},story_not=#{story_not},story_stan=#{story_stan},story_pri=#{story_pri},story_state=#{story_state},lane_id=#{lane_id},story_number=#{story_number},user_name=#{user_name} where story_id=#{story_id}")
-    @Update("update pm_story set story_con=#{story_con},story_not=#{story_not},story_stan=#{story_stan},story_pri=#{story_pri},story_state=#{story_state},story_number=#{story_number},user_name=#{user_name} where story_id=#{story_id}")
+    //卢加上lane_id了
+	@Update("update pm_story set lane_id=#{lane_id}, story_con=#{story_con},story_not=#{story_not},story_stan=#{story_stan},story_pri=#{story_pri},story_state=#{story_state},story_number=#{story_number},user_name=#{user_name} where story_id=#{story_id}")
     @ResultType(BigInteger.class)
 	@FunctionDescriber(shortName = "根据id更新用户故事")
 	public void updatePmStory(Pm_story pm_story);
@@ -79,6 +80,11 @@ public interface Pm_storyMapper {
 	  @FunctionDescriber(shortName = "根据id更新用户故事SM") 
 	  public void updatePmStorySM(Pm_story pm_story);
 	 
+      /* ++++++++++++++++=sxw+++++++++++++++++++++++++++ */
+      //根据迭代ID展示该迭代的用户故事
+    	@Select("select * from pm_story where iteration_id=#{iteration_id}")
+    	@FunctionDescriber(shortName = "根据迭代id展示该迭代的用户故事")
+    	public List<Pm_story> listPm_iteration(@Param("iteration_id") BigInteger iteration_id);
     
     
 }

@@ -49,10 +49,11 @@ public class Pm_story {
 	 @FieldDescriber("状态")
 	  private String story_state;
 	 
+	 //卢将int型改为String型
 	 @DefaultValue("0")
 	 @NotNull
 	 @FieldDescriber("泳道ID")
-	  private int lane_id;
+	  private String lane_id;
 	 
 	 @NotNull
 	 @FieldDescriber("项目ID")
@@ -126,11 +127,11 @@ public class Pm_story {
 		this.story_state = story_state;
 	}
 
-	public int getLane_id() {
+	public String getLane_id() {
 		return lane_id;
 	}
 
-	public void setLane_id(int lane_id) {
+	public void setLane_id(String lane_id) {
 		this.lane_id = lane_id;
 	}
 

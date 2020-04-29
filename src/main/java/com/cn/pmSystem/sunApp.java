@@ -1,7 +1,9 @@
 package com.cn.pmSystem;
 
 
+import com.cn.mappers.Pm_costMapper;
 import com.cn.mappers.Pm_iterationMapper;
+import com.cn.mappers.Pm_projectMapper;
 import com.cn.mappers.Pm_taskMapper;
 import com.cn.mappers.Pm_versionMapper;
 import com.cn.models.Pm_iteration;
@@ -28,17 +30,18 @@ public class sunApp {
 	 */
 	public static void main(String[] args) throws Exception {
 		
-		generateDatabase();
+		//generateDatabase();
 		generateServices();
-		generateApiDoc();
-		generateSqlDoc(); 
+		//generateApiDoc();
+		//generateSqlDoc(); 
 	}
 	//自动生成Services
 	public static void generateServices() throws Exception {
 		ServiceGenerator sg = new ServiceGenerator();
 		//sg.createServiceFromMapper(Pm_versionMapper.class);
 		//sg.createServiceFromMapper(Pm_iterationMapper.class);
-		sg.createServiceFromMapper(Pm_taskMapper.class);
+		//sg.createServiceFromMapper(Pm_taskMapper.class);
+		sg.createServiceFromMapper(Pm_projectMapper.class);
 		sg.write();
 	}
 	//自动生成数据库和数据库表
@@ -49,9 +52,9 @@ public class sunApp {
 	            "root", "980216");
 	      //sql.setDbName("pmsystem");
 	      //sql.createDatabase();
-	      //sql.createTable(Pm_version.class);
+	      sql.createTable(Pm_version.class);
 	      //sql.createTable(Pm_iteration.class);
-	      sql.createTable(Pm_task.class);
+	      //sql.createTable(Pm_task.class);
 	}
 	//API文档生成,空指针异常的话要把getter setter方法删掉
 	public static void generateApiDoc() throws Exception {

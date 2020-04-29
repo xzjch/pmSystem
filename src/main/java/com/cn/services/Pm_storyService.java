@@ -11,6 +11,7 @@ import com.github.webfrk.core.HttpBodyHandler;
 import com.github.tools.annotations.ServiceDefinition;
 
 import java.math.BigInteger;
+import java.util.List;
 
 import javax.validation.*;
 
@@ -58,7 +59,7 @@ public class Pm_storyService extends HttpBodyHandler {
 	}
 
 	@FunctionDescriber(shortName = "根据id更新用户故事PO", description = "暂无", prerequisite = "暂无")
-	public void updatePmStory(@Valid String story_id, String story_con, String story_not, String story_stan,
+	public void updatePmStory(@Valid String lane_id,String story_id, String story_con, String story_not, String story_stan,
 			String story_pri, String story_state, String story_number, String user_name) {
 		Pm_story pm_story = new Pm_story();
 		pm_story.setStory_id(Integer.parseInt(story_id));
@@ -68,6 +69,8 @@ public class Pm_storyService extends HttpBodyHandler {
 		pm_story.setStory_pri(story_pri);
 		pm_story.setStory_state(story_state);
 		//pm_story.setLane_id(Integer.parseInt(lane_id));
+		//卢加了lane_id
+		pm_story.setLane_id(lane_id);
 		System.out.println(story_number);
 		System.out.println(user_name);
 		pm_story.setStory_number(story_number);
@@ -113,5 +116,12 @@ public class Pm_storyService extends HttpBodyHandler {
 		}
 		return pm_storyMapper.getPmStory(story_id);
 	}
+	
+	/* ++++++++++++++++sxw+++++++++++++++++++++++++ */
+	@FunctionDescriber(shortName = "根据迭代id展示该迭代的用户故事", description = "暂无", prerequisite = "暂无")
+	public List<Pm_story> listPm_iteration(BigInteger iteration_id) {
+		return pm_storyMapper.listPm_iteration(iteration_id);
+	}
+
 
 }
