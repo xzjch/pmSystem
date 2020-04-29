@@ -36,17 +36,31 @@ public class Pm_user {
 	
 	@NotNull
 	@Size(max = 10, message = "{Pm_user.user_name.length.illegal}") 
-	
 	@FieldDescriber("用户名")
 	private String user_name;
 	
 	@NotNull
 	@Size(max = 10, message = "{Pm_user.user_realname.length.illegal}") 
-	
 	@FieldDescriber("用户真实姓名")
 	private String user_realname;
 	
+	@NotNull
+	@Size(min=8,max =16 , message = "{Pm_user.user_password.length.illegal}") 
+	@FieldDescriber("用户密码")
+	private String user_password;
+	
+	@NotNull
+	@Size(max = 11, message = "{Pm_user.user_phone.length.illegal}") 
+	@FieldDescriber("用户手机号")
+	private String user_phone;
+	
+	@NotNull
+	@Size(max = 100, message = "{Pm_user.user_email.length.illegal}") 
+	@FieldDescriber("用户邮箱")
+	private String user_email;
+	
 	@Size(max = 10) 
+	@DefaultValue("0")
 	@FieldDescriber("用户状态")
 	private String user_state;
 	
@@ -55,13 +69,22 @@ public class Pm_user {
 	
 	@FieldDescriber("部门下员工的职位")
 	@Size(max = 10)
-	@DefaultValue("0")
 	private String department_user_role;//（0是无部门人员,1是部门主管,2是部门成员）
 	
 	@FieldDescriber("关联的角色ID")
 //	每一个成员变量应该有一个Reqired变量（没有默认表示该参数是前端请求的必填项）
 	@Required(false)
 	private int role_id;
+	
+	@NotNull
+	@Size(max = 100, message = "{Pm_user.role_name.length.illegal}") 
+	@FieldDescriber("角色名称")
+	private String role_name;
+	
+	@NotNull
+	@Size(max = 100, message = "{Pm_user.department_name.length.illegal}") 
+	@FieldDescriber("部门名称")
+	private String department_name;
 	
 	public int getUser_id() {
 		return user_id;
@@ -118,5 +141,44 @@ public class Pm_user {
 	public void setDepartment_user_role(String department_user_role) {
 		this.department_user_role = department_user_role;
 	}
+	public String getUser_password() {
+		return user_password;
+	}
+
+	public void setUser_password(String user_password) {
+		this.user_password = user_password;
+	}
+
+	public String getUser_phone() {
+		return user_phone;
+	}
+
+	public void setUser_phone(String user_phone) {
+		this.user_phone = user_phone;
+	}
+
+	public String getUser_email() {
+		return user_email;
+	}
+
+	public void setUser_email(String user_email) {
+		this.user_email = user_email;
+	}
+	public String getRole_name() {
+		return role_name;
+	}
+
+	public void setRole_name(String role_name) {
+		this.role_name = role_name;
+	}
+
+	public String getDepartment_name() {
+		return department_name;
+	}
+
+	public void setDepartment_name(String department_name) {
+		this.department_name = department_name;
+	}
+
 	
 }
