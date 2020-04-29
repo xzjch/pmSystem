@@ -11,6 +11,7 @@ import com.github.webfrk.core.HttpBodyHandler;
 import com.github.tools.annotations.ServiceDefinition;
 
 import java.math.BigInteger;
+import java.util.List;
 
 import javax.validation.*;
 
@@ -115,5 +116,12 @@ public class Pm_storyService extends HttpBodyHandler {
 		}
 		return pm_storyMapper.getPmStory(story_id);
 	}
+	
+	/* ++++++++++++++++sxw+++++++++++++++++++++++++ */
+	@FunctionDescriber(shortName = "根据迭代id展示该迭代的用户故事", description = "暂无", prerequisite = "暂无")
+	public List<Pm_story> listPm_iteration(BigInteger iteration_id) {
+		return pm_storyMapper.listPm_iteration(iteration_id);
+	}
+
 
 }

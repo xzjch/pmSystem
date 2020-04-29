@@ -38,11 +38,11 @@ public interface Pm_versionMapper {
 	@Delete("delete from pm_version where version_id = #{version_id}")
 	@FunctionDescriber(shortName = "根据id删除发布计划")
 	public void deletePm_version(Pm_version pm_version);
-   //展示（本项目）发布计划信息,还需要获取本项目的id
-	//select * from pm_version where project_id = #{project_id}
-	@Select("select * from pm_version")
-	@FunctionDescriber(shortName = "展示（本项目）发布计划信息")
-	public List<Pm_version> getPm_version();
+	//展示（本项目）发布计划信息,还需要获取本项目的id
+		//select * from pm_version where project_id = #{project_id}
+		@Select("select * from pm_version where project_id = #{project_id}")
+		@FunctionDescriber(shortName = "展示（本项目）发布计划信息")
+		public List<Pm_version> queryPm_version(BigInteger project_id);
     //详情页显示发布计划
 	@Select("select version_name, version_desc, version_stime, version_ptime, version_state, story_con from pm_version where version_id = #{version_id}")
 	@ResultType(Pm_version.class)

@@ -80,6 +80,11 @@ public interface Pm_storyMapper {
 	  @FunctionDescriber(shortName = "根据id更新用户故事SM") 
 	  public void updatePmStorySM(Pm_story pm_story);
 	 
+      /* ++++++++++++++++=sxw+++++++++++++++++++++++++++ */
+      //根据迭代ID展示该迭代的用户故事
+    	@Select("select * from pm_story where iteration_id=#{iteration_id}")
+    	@FunctionDescriber(shortName = "根据迭代id展示该迭代的用户故事")
+    	public List<Pm_story> listPm_iteration(@Param("iteration_id") BigInteger iteration_id);
     
     
 }

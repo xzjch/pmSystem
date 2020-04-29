@@ -60,8 +60,8 @@ public class Pm_versionService extends HttpBodyHandler {
 	}
 
 	@FunctionDescriber(shortName = "展示（本项目）发布计划信息", description = "暂无", prerequisite = "暂无")
-	public java.util.List<com.cn.models.Pm_version> getPm_version() {
-		return pm_versionMapper.getPm_version();
+	public java.util.List<com.cn.models.Pm_version> queryPm_version(BigInteger project_id) {
+		return pm_versionMapper.queryPm_version(project_id);
 	}
 	
 	@FunctionDescriber(shortName = "展示（本项目）用户故事内容信息", description = "暂无", prerequisite = "暂无")

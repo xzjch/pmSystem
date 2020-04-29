@@ -34,13 +34,6 @@ public interface Pm_iterationMapper {
 	@FunctionDescriber(shortName = "展示（本项目）迭代信息")
 	public List<Pm_iteration> getPm_iteration();*/
 			
-	//根据迭代ID展示该迭代的用户故事
-	@Select("select * from pm_iteration iteration,pm_story story "
-			+ "where story.iteration_id = iteration.iteration_id and "
-			+ "iteration.iteration_id=#{iteration_id}")
-			
-	@FunctionDescriber(shortName = "根据迭代id展示该迭代的用户故事")
-	public List<Pm_iteration> listPm_iteration(BigInteger iteration_id);
 	
 	//根据项目id展示该项目的迭代
 	@Select("select iteration_id, iteration_name,iteration_stime,iteration_otime,iteration_desc from pm_iteration where project_id=#{project_id}")
