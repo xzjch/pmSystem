@@ -28,9 +28,10 @@ public class Pm_flowService extends HttpBodyHandler {
 	}
 
 	@FunctionDescriber(shortName = "编辑流转规则", description = "暂无", prerequisite = "暂无")
-	public Integer updateFlow_rule(@Valid String flow_id,String flow_rule,String lane_name1,String flow_condition,String lane_name2,String lane_state) {
+	public Integer updateFlow_rule(@Valid BigInteger flow_id,String flow_rule,String lane_name1,String flow_condition,String lane_name2,String lane_state) {
 		Pm_flow flow = new Pm_flow();
-		flow.setFlow_id(Integer.parseInt(flow_id));
+		String flowid=String.valueOf(flow_id);
+		flow.setFlow_id(Integer.valueOf(flowid));
 		flow.setFlow_rule(flow_rule);
 		flow.setLane_name1(lane_name1);
 		flow.setFlow_condition(flow_condition);
