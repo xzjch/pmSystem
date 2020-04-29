@@ -45,7 +45,7 @@ public class Pm_story {
 	  private String story_pri;
 	 
 	 @Size(max = 200)
-	 @DefaultValue("未完成")	 
+	 @DefaultValue("0")	 //未完成
 	 @FieldDescriber("状态")
 	  private String story_state;
 	 

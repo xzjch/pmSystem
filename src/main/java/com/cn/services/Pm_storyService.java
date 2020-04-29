@@ -4,7 +4,10 @@
 package com.cn.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.cn.mappers.Pm_flowMapper;
 import com.cn.mappers.Pm_storyMapper;
+import com.cn.models.Pm_flow;
 import com.cn.models.Pm_story;
 import com.github.tools.annotations.api.FunctionDescriber;
 import com.github.webfrk.core.HttpBodyHandler;
@@ -25,7 +28,9 @@ public class Pm_storyService extends HttpBodyHandler {
 	@Autowired
 	private Pm_storyMapper pm_storyMapper;
 
-	
+	@Autowired
+	private Pm_flowMapper pm_flowMapper;
+
 	/*
 	 * 邢娇娇
 	 */
@@ -58,33 +63,45 @@ public class Pm_storyService extends HttpBodyHandler {
 		pm_storyMapper.deletePmStory(pm_story);
 	}
 
+	/* GMZ */
 	@FunctionDescriber(shortName = "根据id更新用户故事PO", description = "暂无", prerequisite = "暂无")
-	public void updatePmStory(@Valid String lane_id,String story_id, String story_con, String story_not, String story_stan,
-			String story_pri, String story_state, String story_number, String user_name) {
+	public void updatePmStory(@Valid String lane_id, String story_id, String story_con, String story_not,
+			String story_stan, String story_pri, String story_state, String story_number, String user_name,
+			BigInteger project_id) {
+		
+        System.out.println("我进入updatePmStory了");
 		Pm_story pm_story = new Pm_story();
 		pm_story.setStory_id(Integer.parseInt(story_id));
 		pm_story.setStory_con(story_con);
 		pm_story.setStory_not(story_not);
 		pm_story.setStory_stan(story_stan);
 		pm_story.setStory_pri(story_pri);
-		pm_story.setStory_state(story_state);
-		//pm_story.setLane_id(Integer.parseInt(lane_id));
-		//卢加了lane_id
-		pm_story.setLane_id(lane_id);
-		System.out.println(story_number);
-		System.out.println(user_name);
 		pm_story.setStory_number(story_number);
 		pm_story.setUser_name(user_name);
-		System.out.println(pm_story);
-		pm_storyMapper.updatePmStory(pm_story);
+		/* GMZ */
+		Pm_flow pm_flow = pm_flowMapper.queryflowByLane(lane_id, story_state, project_id);
+		if (pm_flow != null) {
+			System.out.println("有流转规则");
+			//有流转规则，进行添加流转规则后的用户故事状态和泳道列表
+			pm_story.setStory_state(pm_flow.getLane_state());
+			pm_story.setLane_id(pm_flow.getLane_name2());
+			pm_storyMapper.updatePmStory(pm_story);
+		} else {
+			System.out.println("没有流转规则");
+			//没有流转规则，进行添加流转规则后的用户故事状态和泳道列表
+			pm_story.setStory_state(story_state);
+			pm_story.setLane_id(lane_id);
+			pm_storyMapper.updatePmStory(pm_story);
+
+		}
+
 	}
 
 	@FunctionDescriber(shortName = "根据id更新用户故事SM", description = "暂无", prerequisite = "暂无")
-	public void updatePmStorySM(@Valid String story_id, String story_state,String story_number,
-			String user_name) {
+	public void updatePmStorySM(@Valid String story_id, String story_state, String story_number, String user_name) {
 		Pm_story pm_story = new Pm_story();
 		pm_story.setStory_id(Integer.parseInt(story_id));
-		//pm_story.setLane_id(Integer.parseInt(lane_id));
+		// pm_story.setLane_id(Integer.parseInt(lane_id));
 		pm_story.setStory_state(story_state);
 		pm_story.setStory_number(story_number);
 		pm_story.setUser_name(user_name);
@@ -116,12 +133,11 @@ public class Pm_storyService extends HttpBodyHandler {
 		}
 		return pm_storyMapper.getPmStory(story_id);
 	}
-	
+
 	/* ++++++++++++++++sxw+++++++++++++++++++++++++ */
 	@FunctionDescriber(shortName = "根据迭代id展示该迭代的用户故事", description = "暂无", prerequisite = "暂无")
 	public List<Pm_story> listPm_iteration(BigInteger iteration_id) {
 		return pm_storyMapper.listPm_iteration(iteration_id);
 	}
-
 
 }
