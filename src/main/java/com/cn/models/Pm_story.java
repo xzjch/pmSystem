@@ -12,73 +12,71 @@ import com.github.tools.annotations.mysql.PrivateKey;
 
 @JavaBean
 public class Pm_story {
-	
-	 @PrivateKey
-	 @AutoIncrement
-	 
-	 @FieldDescriber("用户故事ID")
-	  private int story_id;
-	 
-	 @NotNull
-	 @Size(max = 500, message = "{pm_story.story_con.length.illegal}")
-	 
-	 @FieldDescriber("用户故事内容")
-	 @Required(true)
-	 private String story_con;
-	 
-	 
-	 @Size(max = 200)	 
-	 @FieldDescriber("细节注释")
-	  private String story_not;
-	 
-	 @Size(max = 200)	 
-	 @FieldDescriber("验收标准")
-	  private String story_stan;
-	 
-	 @Size(max = 200)	 
-	 @FieldDescriber("故事点")
-	  private String story_number;
-	 
-	 @Size(max = 200)
-	 @DefaultValue("普通")	 
-	 @FieldDescriber("优先级")
-	  private String story_pri;
-	 
-	 @Size(max = 200)
-	 @DefaultValue("0")	 //未完成
-	 @FieldDescriber("状态")
-	  private String story_state;
-	 
-	 //卢将int型改为String型
-	 @DefaultValue("0")
-	 @NotNull
-	 @FieldDescriber("泳道ID")
-	  private String lane_id;
-	 
-	 @NotNull
-	 @FieldDescriber("项目ID")
-	  private int project_id;
-	 
-	 @FieldDescriber("迭代ID")
-	  private int iteration_id;
-	 
-	 @FieldDescriber("发布计划ID")
-	  private int version_id;
-	 
-	 @Size(max = 200)
-	 @FieldDescriber("用户名")
-	 private String user_name;
-	 
-	  public String getUser_name() { 
-		  return user_name;
-	  } 
-	  public void setUser_name(String user_name) {
-		  this.user_name = user_name; 
-	  }
-	 
 
-	
-	
+	@PrivateKey
+	@AutoIncrement
+
+	@FieldDescriber("用户故事ID")
+	private int story_id;
+
+	@NotNull
+	@Size(max = 500, message = "{pm_story.story_con.length.illegal}")
+
+	@FieldDescriber("用户故事内容")
+	@Required(true)
+	private String story_con;
+
+	@Size(max = 200)
+	@FieldDescriber("细节注释")
+	private String story_not;
+
+	@Size(max = 200)
+	@FieldDescriber("验收标准")
+	private String story_stan;
+
+	@Size(max = 200)
+	@FieldDescriber("故事点")
+	private String story_number;
+
+	@Size(max = 200)
+	@DefaultValue("普通")
+	@FieldDescriber("优先级")
+	private String story_pri;
+
+	@Size(max = 200)
+	@DefaultValue("0") // 未完成
+	@FieldDescriber("状态")
+	private String story_state;
+
+	// 卢将int型改为String型
+	@DefaultValue("0")
+	@NotNull
+	@Size(max = 200)
+	@FieldDescriber("泳道ID")
+	private String lane_id;
+
+	@NotNull
+	@FieldDescriber("项目ID")
+	private int project_id;
+
+	@FieldDescriber("迭代ID")
+	private int iteration_id;
+
+	@FieldDescriber("发布计划ID")
+	private int version_id;
+
+	@Size(max = 200)
+	@FieldDescriber("用户名")
+	private String user_name;
+
+	public String getUser_name() {
+		return user_name;
+	}
+
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
+
 	public int getStory_id() {
 		return story_id;
 	}
@@ -109,7 +107,7 @@ public class Pm_story {
 
 	public void setStory_stan(String story_stan) {
 		this.story_stan = story_stan;
-	}	
+	}
 
 	public String getStory_pri() {
 		return story_pri;
@@ -142,26 +140,29 @@ public class Pm_story {
 	public void setProject_id(int project_id) {
 		this.project_id = project_id;
 	}
+
 	public String getStory_number() {
 		return story_number;
 	}
+
 	public void setStory_number(String story_number) {
 		this.story_number = story_number;
 	}
-	
+
 	public int getIteration_id() {
 		return iteration_id;
 	}
+
 	public void setIteration_id(int iteration_id) {
 		this.iteration_id = iteration_id;
 	}
+
 	public int getVersion_id() {
 		return version_id;
 	}
+
 	public void setVersion_id(int version_id) {
 		this.version_id = version_id;
 	}
 
-	
-	 
 }

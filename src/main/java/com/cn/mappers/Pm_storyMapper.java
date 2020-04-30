@@ -3,6 +3,8 @@ package com.cn.mappers;
 import java.math.BigInteger;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -15,16 +17,13 @@ import com.cn.models.Pm_story;
 import com.cn.models.Pm_user;
 import com.github.tools.annotations.api.FunctionDescriber;
 
-
-
 @Mapper
 public interface Pm_storyMapper {
-	
-	
+
 	/*
 	 * 邢娇娇
 	 */
-	//根据故事id查询该项目成员
+	// 根据故事id查询该项目成员
 	@Select("select * from pm_member member,pm_user user,pm_story story "
 			+ "where user.user_id=member.user_id and member.project_id=story.project_id and "
 			+ "story.story_id=#{story_id};")
@@ -32,59 +31,67 @@ public interface Pm_storyMapper {
 	@ResultType(Pm_story.class)
 	public List<Pm_story> getPmMember(BigInteger story_id);
 
-	//@Insert("INSERT INTO pm_story(story_con,story_not,story_stan,story_pri,story_state,lane_id,project_id) VALUES(#{story_con},#{story_not},#{story_stan},#{story_pri},#{story_state},#{lane_id},#{project_id})")
+	// @Insert("INSERT INTO
+	// pm_story(story_con,story_not,story_stan,story_pri,story_state,lane_id,project_id)
+	// VALUES(#{story_con},#{story_not},#{story_stan},#{story_pri},#{story_state},#{lane_id},#{project_id})")
 	@Insert("INSERT INTO pm_story(story_con,story_not,story_stan,project_id) VALUES(#{story_con},#{story_not},#{story_stan},#{project_id})")
-	
+
 	@FunctionDescriber(shortName = "添加用户故事")
 	public void addPmStory(Pm_story pm_story);
-	
-	
+
 	@Select("select *  from pm_story where story_id=#{story_id}")
-	@ResultType(Pm_story.class)  
+	@ResultType(Pm_story.class)
 	@FunctionDescriber(shortName = "根据id查询用户故事")
 	public Pm_story getPmStory(@Param("story_id") BigInteger story_id);
-	
 
-	
-	  @Select("select * from pm_story where lane_id=#{lane_id} and project_id=#{project_id}")
-	  
-	  @FunctionDescriber(shortName = "根据泳道id和项目id查询用户故事") 
-	  public List<Pm_story> getProLaneStory(@Param("lane_id") BigInteger lane_id,@Param("project_id") BigInteger project_id);
-	 
-	 
-	 
-	 @Select("select * from pm_story where lane_id=#{lane_id}")
-		
-	 @FunctionDescriber(shortName = "根据泳道id查询用户故事") 
-	 public List<Pm_story> getLaneStory(@Param("lane_id") BigInteger lane_id);
-	
-	
+	@Select("select * from pm_story where lane_id=#{lane_id} and project_id=#{project_id}")
+
+	@FunctionDescriber(shortName = "根据泳道id和项目id查询用户故事")
+	public List<Pm_story> getProLaneStory(@Param("lane_id") BigInteger lane_id,
+			@Param("project_id") BigInteger project_id);
+
+	@Select("select * from pm_story where lane_id=#{lane_id}")
+
+	@FunctionDescriber(shortName = "根据泳道id查询用户故事")
+	public List<Pm_story> getLaneStory(@Param("lane_id") BigInteger lane_id);
+
 	@Delete("delete from pm_story where story_id=#{story_id}")
 	@ResultType(BigInteger.class)
 	@FunctionDescriber(shortName = "根据Id删除用户故事")
 	public void deletePmStory(Pm_story pm_story);
-	
-	
-    //@Update("update pm_story set story_con=#{story_con},story_not=#{story_not},story_stan=#{story_stan},story_pri=#{story_pri},story_state=#{story_state},lane_id=#{lane_id},story_number=#{story_number},user_name=#{user_name} where story_id=#{story_id}")
-    //卢加上lane_id了
+
+	// @Update("update pm_story set
+	// story_con=#{story_con},story_not=#{story_not},story_stan=#{story_stan},story_pri=#{story_pri},story_state=#{story_state},lane_id=#{lane_id},story_number=#{story_number},user_name=#{user_name}
+	// where story_id=#{story_id}")
+	// 卢加上lane_id了
 	@Update("update pm_story set lane_id=#{lane_id}, story_con=#{story_con},story_not=#{story_not},story_stan=#{story_stan},story_pri=#{story_pri},story_state=#{story_state},story_number=#{story_number},user_name=#{user_name} where story_id=#{story_id}")
-    @ResultType(BigInteger.class)
+	@ResultType(BigInteger.class)
 	@FunctionDescriber(shortName = "根据id更新用户故事")
 	public void updatePmStory(Pm_story pm_story);
-    
-    
-	
-	  //@Update("update pm_story set story_state=#{story_state},story_number=#{story_number},user_name=#{user_name},lane_id=#{lane_id} where story_id=#{story_id}")
-      @Update("update pm_story set story_state=#{story_state},story_number=#{story_number},user_name=#{user_name} where story_id=#{story_id}")
-	  @ResultType(BigInteger.class)
-	  @FunctionDescriber(shortName = "根据id更新用户故事SM") 
-	  public void updatePmStorySM(Pm_story pm_story);
-	 
-      /* ++++++++++++++++=sxw+++++++++++++++++++++++++++ */
-      //根据迭代ID展示该迭代的用户故事
-    	@Select("select * from pm_story where iteration_id=#{iteration_id}")
-    	@FunctionDescriber(shortName = "根据迭代id展示该迭代的用户故事")
-    	public List<Pm_story> listPm_iteration(@Param("iteration_id") BigInteger iteration_id);
-    
-    
+
+	// @Update("update pm_story set
+	// story_state=#{story_state},story_number=#{story_number},user_name=#{user_name},lane_id=#{lane_id}
+	// where story_id=#{story_id}")
+	@Update("update pm_story set story_state=#{story_state},story_number=#{story_number},user_name=#{user_name} where story_id=#{story_id}")
+	@ResultType(BigInteger.class)
+	@FunctionDescriber(shortName = "根据id更新用户故事SM")
+	public void updatePmStorySM(Pm_story pm_story);
+
+	/* ++++++++++++++++=sxw+++++++++++++++++++++++++++ */
+	// 根据迭代ID展示该迭代的用户故事
+	@Select("select * from pm_story where iteration_id=#{iteration_id}")
+	@FunctionDescriber(shortName = "根据迭代id展示该迭代的用户故事")
+	public List<Pm_story> listPm_iteration(@Param("iteration_id") BigInteger iteration_id);
+
+	/* ++++++++++++++++++++++++++++++++耿明泽++++++++++++++++++++++++++++++++++++++ */
+	// 查询某一项目的所有用户故事
+	@Select("select * from pm_story where project_id=#{project_id}")
+	@FunctionDescriber(shortName = "查询某一项目的所有用户故事事")
+	public List<Pm_story> getAllStorys(BigInteger project_id);
+
+	// 根据用户故事Id删除用户故事
+	@Delete("delete from pm_story where story_id=#{story_id}")
+	@FunctionDescriber(shortName = "根据用户故事Id删除用户故事")
+	public void deleteStoryById(BigInteger story_id);
+
 }

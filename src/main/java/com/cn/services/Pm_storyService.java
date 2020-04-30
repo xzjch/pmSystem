@@ -65,13 +65,13 @@ public class Pm_storyService extends HttpBodyHandler {
 
 	/* GMZ */
 	@FunctionDescriber(shortName = "根据id更新用户故事PO", description = "暂无", prerequisite = "暂无")
-	public void updatePmStory(@Valid String lane_id, String story_id, String story_con, String story_not,
+	public void updatePmStory(String lane_id, BigInteger story_id, String story_con, String story_not,
 			String story_stan, String story_pri, String story_state, String story_number, String user_name,
 			BigInteger project_id) {
-		
+		String storyid=String.valueOf(story_id);//-------------GMZ
         System.out.println("我进入updatePmStory了");
 		Pm_story pm_story = new Pm_story();
-		pm_story.setStory_id(Integer.parseInt(story_id));
+		pm_story.setStory_id(Integer.parseInt(storyid));//-----------------GMZ
 		pm_story.setStory_con(story_con);
 		pm_story.setStory_not(story_not);
 		pm_story.setStory_stan(story_stan);
@@ -138,6 +138,16 @@ public class Pm_storyService extends HttpBodyHandler {
 	@FunctionDescriber(shortName = "根据迭代id展示该迭代的用户故事", description = "暂无", prerequisite = "暂无")
 	public List<Pm_story> listPm_iteration(BigInteger iteration_id) {
 		return pm_storyMapper.listPm_iteration(iteration_id);
+	}
+	
+	/* ++++++++++++++++++++++++++++++++耿明泽++++++++++++++++++++++++++++++++++++++ */
+	@FunctionDescriber(shortName = "查询某一项目的所有用户故事事", description = "暂无", prerequisite = "暂无")
+	public List<Pm_story> getAllStorys(BigInteger project_id){
+		return pm_storyMapper.getAllStorys(project_id);
+	}
+	@FunctionDescriber(shortName = "根据Id删除用户故事", description = "暂无", prerequisite = "暂无")
+	public void deleteStoryById(BigInteger story_id) {
+		pm_storyMapper.deleteStoryById(story_id);
 	}
 
 }
