@@ -29,4 +29,24 @@ public interface Pm_bugMapper {
 	@FunctionDescriber(shortName = "根据项目id展示该项目的所有缺陷")
 	public List<Pm_bug> getPm_bug(@Param("project_id") BigInteger project_id);
 
+	@Select("select * from pm_bug where project_id=#{project_id} and bug_user='' ")
+	@FunctionDescriber(shortName = "根据领取人展示该项目的所有缺陷")
+	public List<Pm_bug> getBugByUser(@Param("project_id") BigInteger project_id );
+
+	@Select("select * from pm_bug where project_id=#{project_id} and bug_user=#{bug_user} and bug_state='待消缺' ")
+	@FunctionDescriber(shortName = "根据领取人和状态展示该项目的所有缺陷")
+	public List<Pm_bug> getBugByStatea(@Param("project_id") BigInteger project_id,@Param("bug_user") String bug_user);
+
+	@Select("select * from pm_bug where project_id=#{project_id} and bug_user=#{bug_user} and bug_state='消缺中' ")
+	@FunctionDescriber(shortName = "根据领取人和状态展示该项目的所有缺陷")
+	public List<Pm_bug> getBugByStateb(@Param("project_id") BigInteger project_id,@Param("bug_user") String bug_user);
+
+	@Select("select * from pm_bug where project_id=#{project_id} and bug_user=#{bug_user} and bug_state='已消缺' ")
+	@FunctionDescriber(shortName = "根据领取人和状态展示该项目的所有缺陷")
+	public List<Pm_bug> getBugByStatec(@Param("project_id") BigInteger project_id,@Param("bug_user") String bug_user);
+
+	@Select("select * from pm_bug where project_id=#{project_id} and bug_user=#{bug_user} and bug_state='已关闭' ")
+	@FunctionDescriber(shortName = "根据领取人和状态展示该项目的所有缺陷")
+	public List<Pm_bug> getBugByStated(@Param("project_id") BigInteger project_id,@Param("bug_user") String bug_user);
+
 }
