@@ -1,16 +1,17 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.cn</groupId>
-  <artifactId>pmSystem</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
+	<groupId>com.cn</groupId>
+	<artifactId>pmSystem</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 
-  <name>pmSystem</name>
-  <url>http://maven.apache.org</url>
+	<name>pmSystem</name>
+	<url>http://maven.apache.org</url>
 
- <parent>
+	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.2.4.RELEASE</version>
@@ -244,58 +245,85 @@
 					</execution>
 				</executions>
 			</plugin>
-			
-			 <plugin> 
 
-                   <groupId>org.jacoco</groupId>
+			<plugin>
 
-                   <artifactId>jacoco-maven-plugin</artifactId>
+				<groupId>org.jacoco</groupId>
 
-                   <version>0.8.2</version>
+				<artifactId>jacoco-maven-plugin</artifactId>
 
-                   <configuration>
+				<version>0.8.2</version>
 
-                            <!--指定生成.exec文件的存放位置-->
+				<configuration>
 
-                            <destFile>target/coverage-reports/jacoco-unit.exec</destFile>
+					<!--指定生成.exec文件的存放位置 -->
 
-                            <!--Jacoco是根据.exec文件生成最终的报告，所以需指定.exec的存放路径-->
+					<destFile>target/coverage-reports/jacoco-unit.exec</destFile>
 
-                            <dataFile>target/coverage-reports/jacoco-unit.exec</dataFile>
+					<!--Jacoco是根据.exec文件生成最终的报告，所以需指定.exec的存放路径 -->
 
-                   </configuration>
+					<dataFile>target/coverage-reports/jacoco-unit.exec</dataFile>
 
-                            <executions>
+				</configuration>
 
-                                     <execution>
+				<executions>
 
-                                               <id>jacoco-initialize</id>
+					<execution>
 
-                                               <goals>
+						<id>jacoco-initialize</id>
 
-                                                        <goal>prepare-agent</goal>
+						<goals>
 
-                                               </goals>
+							<goal>prepare-agent</goal>
 
-                                     </execution>
+						</goals>
 
-                            <execution>
+					</execution>
 
-                                               <id>jacoco-site</id>
+					<execution>
 
-                                               <phase>test</phase>
+						<id>jacoco-site</id>
 
-                                               <goals>
+						<phase>test</phase>
 
-                                                        <goal>report</goal>
+						<goals>
 
-                                               </goals>
+							<goal>report</goal>
 
-                            </execution>
+						</goals>
 
-                   </executions>
+					</execution>
 
-                   </plugin>
+				</executions>
+
+			</plugin>
+
+			<plugin>
+
+				<groupId>com.lazerycode.jmeter</groupId>
+
+				<artifactId>jmeter-maven-plugin</artifactId>
+
+				<version>2.7.0</version>
+
+				<executions>
+
+					<execution>
+
+						<id>jmeter-tests</id>
+
+						<goals>
+
+							<goal>jmeter</goal>
+
+						</goals>
+
+					</execution>
+
+				</executions>
+
+			</plugin>
+
 		</plugins>
 	</build>
 </project>
