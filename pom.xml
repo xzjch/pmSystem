@@ -6,7 +6,7 @@
 	<groupId>com.cn</groupId>
 	<artifactId>pmSystem</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>pmSystem</name>
 	<url>http://maven.apache.org</url>
