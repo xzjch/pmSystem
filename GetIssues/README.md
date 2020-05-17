@@ -1,2 +1,0 @@
-# GetIssues
-sonar-github
